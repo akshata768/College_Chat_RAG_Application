@@ -3,7 +3,7 @@ import numpy as np
 from groq import Groq
 from pypdf import PdfReader
 from sentence_transformers import SentenceTransformer
-from pathlib import path
+from pathlib import Path
 
 #load pdfs
 def load_pdf (pdf_path):
@@ -40,8 +40,8 @@ def build_vectors (chunks, model_name = "all-MiniLM-L6-v2"):
 #call loadpdf, chunk, embedding
 def load_base (pdf_path = "college_docs"):
   chunks = []
-  for pdf in path(pdf_path).glob("*.pdf"):
-    full_text = load_pdf(path)
+  for pdf in Path(pdf_path).glob("*.pdf"):
+    full_text = load_pdf(pdf)
     chunks.extend(create_chunks(full_text))
     index, embed_model = build_vectors(chunks)
     return index, embed_model, chunks
